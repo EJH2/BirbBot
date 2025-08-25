@@ -10,13 +10,13 @@ logger = logging.getLogger("discord")
 
 class BotSettings(pydantic_settings.BaseSettings):
     model_config = pydantic_settings.SettingsConfigDict(
-        env_file=".env"
+        secrets_dir="/run/secrets", env_file=".env"
     )
 
-    GUILD_ID: int
-    APPROVED_ROLE_IDS: set[int]
-    GATE_ROLE_ID: int
-    BOT_TOKEN: str
+    guild_id: int
+    approved_role_ids: set[int]
+    gate_role_id: int
+    bot_token: str
 
 
 @lru_cache
@@ -35,9 +35,9 @@ class BirbBot(discord.Client):
 
     async def on_ready(self):
         logger.info(f'Logged on as {self.user}!')
-        self.guild = discord.utils.get(self.guilds, id=settings.GUILD_ID)
-        self.approved_roles = set(discord.utils.get(self.guild.roles, id=role_id) for role_id in settings.APPROVED_ROLE_IDS)
-        self.gate_role = discord.utils.get(self.guild.roles, id=settings.GATE_ROLE_ID)
+        self.guild = discord.utils.get(self.guilds, id=settings.guild_id)
+        self.approved_roles = set(discord.utils.get(self.guild.roles, id=role_id) for role_id in settings.approved_role_ids)
+        self.gate_role = discord.utils.get(self.guild.roles, id=settings.gate_role_id)
 
 
     async def on_member_update(self, _: discord.Member, after: discord.Member):
@@ -55,4 +55,4 @@ intents.guilds = True
 intents.members = True
 
 client = BirbBot(intents=intents)
-client.run(settings.BOT_TOKEN)
+client.run(settings.bot_token)

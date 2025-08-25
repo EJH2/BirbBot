@@ -10,4 +10,4 @@ services:
 
 secrets:
   bot_token:
-    file: bot_token.secret
+    file: ./bot_token.secret

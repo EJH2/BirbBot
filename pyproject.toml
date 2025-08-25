@@ -3,7 +3,7 @@ name = "birbbot"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Ethan",email = "ethan.harriz@gmail.com"}
+    {name = "Ethan Harriz",email = "ethan.harriz@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.11"
@@ -12,6 +12,8 @@ dependencies = [
     "pydantic-settings (>=2.10.1,<3.0.0)"
 ]
 
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
